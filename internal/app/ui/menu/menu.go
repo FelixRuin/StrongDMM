@@ -221,6 +221,21 @@ func (m *Menu) Process() {
 				Enabled(m.app.HasLoadedEnvironment()).
 				Selected(m.isMobToggled()).
 				Shortcut(platform.KeyModName(), "4"),
+			w.MenuItem("Show Wires", m.doTogglePower).
+				IconEmpty().
+				Enabled(m.app.HasLoadedEnvironment()).
+				Selected(m.isPowerToggled()).
+				Shortcut(platform.KeyModName(), "5"),
+			w.MenuItem("Show Atmos", m.doToggleAtmos).
+				IconEmpty().
+				Enabled(m.app.HasLoadedEnvironment()).
+				Selected(m.isAtmosToggled()).
+				Shortcut(platform.KeyModName(), "6"),
+			w.MenuItem("Show Disposal pipes", m.doToggleDisp).
+				IconEmpty().
+				Enabled(m.app.HasLoadedEnvironment()).
+				Selected(m.isDispToggled()).
+				Shortcut(platform.KeyModName(), "7"),
 			w.MenuItem("Show All", m.doShowAll).
 				IconEmpty().
 				Enabled(m.app.HasLoadedEnvironment()),
@@ -294,10 +309,44 @@ func (m *Menu) doToggleArea() {
 
 func (m *Menu) doToggleTurf() {
 	m.app.PathsFilter().TogglePath("/turf")
+	if m.app.PathsFilter().IsVisiblePath("/turf") {
+		if m.app.PathsFilter().IsHiddenPath("/obj/effect/turf_decal") {
+			m.app.PathsFilter().TogglePath("/obj/effect/turf_decal")
+		}
+	}
+	if m.app.PathsFilter().IsHiddenPath("/turf") {
+		if m.app.PathsFilter().IsVisiblePath("/obj/effect/turf_decal") {
+			m.app.PathsFilter().TogglePath("/obj/effect/turf_decal")
+		}
+	}
 }
 
 func (m *Menu) doToggleObject() {
 	m.app.PathsFilter().TogglePath("/obj")
+	if m.app.PathsFilter().IsVisiblePath("/turf") {
+		if m.app.PathsFilter().IsHiddenPath("/obj/effect/turf_decal") {
+			m.app.PathsFilter().TogglePath("/obj/effect/turf_decal")
+		}
+	}
+	if m.app.PathsFilter().IsHiddenPath("/turf") {
+		if m.app.PathsFilter().IsVisiblePath("/obj/effect/turf_decal") {
+			m.app.PathsFilter().TogglePath("/obj/effect/turf_decal")
+		}
+	}
+}
+
+func (m *Menu) doToggleAtmos() {
+	m.app.PathsFilter().TogglePath("/obj/machinery/atmospherics")
+}
+
+func (m *Menu) doTogglePower() {
+	m.app.PathsFilter().TogglePath("/obj/structure/cable")
+	m.app.PathsFilter().TogglePath("/obj/machinery/power")
+}
+
+func (m *Menu) doToggleDisp() {
+	m.app.PathsFilter().TogglePath("/obj/structure/disposalpipe")
+	m.app.PathsFilter().TogglePath("/obj/machinery/disposal")
 }
 
 func (m *Menu) doToggleMob() {
@@ -322,4 +371,16 @@ func (m *Menu) isObjectToggled() bool {
 
 func (m *Menu) isMobToggled() bool {
 	return m.app.PathsFilter().IsVisiblePath("/mob")
+}
+
+func (m *Menu) isAtmosToggled() bool {
+	return m.app.PathsFilter().IsVisiblePath("/obj/machinery/atmospherics")
+}
+
+func (m *Menu) isPowerToggled() bool {
+	return m.app.PathsFilter().IsVisiblePath("/obj/structure/cable")
+}
+
+func (m *Menu) isDispToggled() bool {
+	return m.app.PathsFilter().IsVisiblePath("/obj/structure/disposalpipe")
 }

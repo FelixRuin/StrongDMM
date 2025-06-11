@@ -77,6 +77,30 @@ func (p *PaneMap) addShortcuts() {
 	})
 
 	p.shortcuts.Add(shortcut.Shortcut{
+		Name:         "pmap#doToggleWire",
+		FirstKey:     platform.KeyModLeft(),
+		FirstKeyAlt:  platform.KeyModRight(),
+		SecondKey:    glfw.Key5,
+		SecondKeyAlt: glfw.KeyKP5,
+		Action:       p.doToggleWire,
+	})
+	p.shortcuts.Add(shortcut.Shortcut{
+		Name:         "pmap#doToggleAtmos",
+		FirstKey:     platform.KeyModLeft(),
+		FirstKeyAlt:  platform.KeyModRight(),
+		SecondKey:    glfw.Key6,
+		SecondKeyAlt: glfw.KeyKP6,
+		Action:       p.doToggleAtmos,
+	})
+	p.shortcuts.Add(shortcut.Shortcut{
+		Name:         "pmap#doToggleDisp",
+		FirstKey:     platform.KeyModLeft(),
+		FirstKeyAlt:  platform.KeyModRight(),
+		SecondKey:    glfw.Key7,
+		SecondKeyAlt: glfw.KeyKP7,
+		Action:       p.doToggleDisp,
+	})
+	p.shortcuts.Add(shortcut.Shortcut{
 		Name:        "pmap#doPreviousLevel",
 		FirstKey:    platform.KeyModLeft(),
 		FirstKeyAlt: platform.KeyModRight(),
@@ -139,16 +163,53 @@ func (p *PaneMap) doToggleArea() {
 func (p *PaneMap) doToggleTurf() {
 	log.Print("do toggle /turf")
 	p.app.PathsFilter().TogglePath("/turf")
+	if p.app.PathsFilter().IsVisiblePath("/turf") {
+		if p.app.PathsFilter().IsHiddenPath("/obj/effect/turf_decal") {
+			p.app.PathsFilter().TogglePath("/obj/effect/turf_decal")
+		}
+	}
+	if p.app.PathsFilter().IsHiddenPath("/turf") {
+		if p.app.PathsFilter().IsVisiblePath("/obj/effect/turf_decal") {
+			p.app.PathsFilter().TogglePath("/obj/effect/turf_decal")
+		}
+	}
 }
 
 func (p *PaneMap) doToggleObject() {
 	log.Print("do toggle /obj")
 	p.app.PathsFilter().TogglePath("/obj")
+	if p.app.PathsFilter().IsVisiblePath("/turf") {
+		if p.app.PathsFilter().IsHiddenPath("/obj/effect/turf_decal") {
+			p.app.PathsFilter().TogglePath("/obj/effect/turf_decal")
+		}
+	}
+	if p.app.PathsFilter().IsHiddenPath("/turf") {
+		if p.app.PathsFilter().IsVisiblePath("/obj/effect/turf_decal") {
+			p.app.PathsFilter().TogglePath("/obj/effect/turf_decal")
+		}
+	}
 }
 
 func (p *PaneMap) doToggleMob() {
 	log.Print("do toggle /mob")
 	p.app.PathsFilter().TogglePath("/mob")
+}
+
+func (p *PaneMap) doToggleWire() {
+	log.Print("do toggle /obj/structure/cable")
+	p.app.PathsFilter().TogglePath("/obj/structure/cable")
+	p.app.PathsFilter().TogglePath("/obj/machinery/power")
+}
+
+func (p *PaneMap) doToggleAtmos() {
+	log.Print("do toggle /obj/machinery/atmospherics")
+	p.app.PathsFilter().TogglePath("/obj/machinery/atmospherics")
+}
+
+func (p *PaneMap) doToggleDisp() {
+	log.Print("do toggle /obj/structure/disposalpipe")
+	p.app.PathsFilter().TogglePath("/obj/structure/disposalpipe")
+	p.app.PathsFilter().TogglePath("/obj/machinery/disposal")
 }
 
 func (p *PaneMap) DoDeselect() {
