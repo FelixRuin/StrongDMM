@@ -74,8 +74,8 @@ func (a *app) loadPreferencesConfig() {
 				NudgeMode:  prefs.SaveNudgeModePixel,
 			},
 			Application: prefs.Application{
-				CheckForUpdates: true,
-				AutoUpdate:      true,
+				CheckForUpdates: false,
+				AutoUpdate:      false,
 			},
 		},
 	}
