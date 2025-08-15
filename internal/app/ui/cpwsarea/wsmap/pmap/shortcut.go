@@ -199,11 +199,13 @@ func (p *PaneMap) doToggleWire() {
 	log.Print("do toggle /obj/structure/cable")
 	p.app.PathsFilter().TogglePath("/obj/structure/cable")
 	p.app.PathsFilter().TogglePath("/obj/machinery/power")
+	p.app.PathsFilter().TogglePath("/obj/effect/mapping_helpers/network_builder/power_cable")
 }
 
 func (p *PaneMap) doToggleAtmos() {
 	log.Print("do toggle /obj/machinery/atmospherics")
 	p.app.PathsFilter().TogglePath("/obj/machinery/atmospherics")
+	p.app.PathsFilter().TogglePath("/obj/effect/mapping_helpers/network_builder/atmos_pipe")
 }
 
 func (p *PaneMap) doToggleDisp() {

@@ -337,11 +337,13 @@ func (m *Menu) doToggleObject() {
 
 func (m *Menu) doToggleAtmos() {
 	m.app.PathsFilter().TogglePath("/obj/machinery/atmospherics")
+	m.app.PathsFilter().TogglePath("/obj/effect/mapping_helpers/network_builder/atmos_pipe")
 }
 
 func (m *Menu) doTogglePower() {
 	m.app.PathsFilter().TogglePath("/obj/structure/cable")
 	m.app.PathsFilter().TogglePath("/obj/machinery/power")
+	m.app.PathsFilter().TogglePath("/obj/effect/mapping_helpers/network_builder/power_cable")
 }
 
 func (m *Menu) doToggleDisp() {
